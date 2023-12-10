@@ -27,6 +27,9 @@ main {
   margin-right: 5rem;
   padding: 1rem;
 }
+
+/******* NAVBAR ********/
+
 .navbar {
   width: 5rem;
   height: 100vh;
@@ -88,4 +91,13 @@ main {
 .fa-primary,
 .fa-secondary {
   transition: var(--transition-speed);
+}
+/******* Inputs ********/
+input,
+textarea {
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 6px;
+  color: black;
+  padding: 10px 12px;
 }
