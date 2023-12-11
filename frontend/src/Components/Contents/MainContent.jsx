@@ -7,6 +7,10 @@ import Registration from "../Auth/Registration";
 import AuthContext from "../Services/AuthContext";
 import NotificationContext from "../Services/NotificationContext";
 import Notification from "../Utilities/Notification";
+import ToHome from "../404/ToHome";
+import Matches from "../Volleyball/Matches";
+import OneTeam from "../Volleyball/OneTeam";
+import Tagfelvetel from "../Volleyball/Tagfelvetel";
 
 const MainContent = () => {
   //Bejelentkezés és regisztráció
@@ -36,7 +40,30 @@ const MainContent = () => {
                 </LoggedPageHolder>
               }
             />
-
+            <Route
+              path="/team/:id"
+              element={
+                <LoggedPageHolder title={"Egy csapat"}>
+                  <OneTeam />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
+              path="/tagfelvetel/:id"
+              element={
+                <LoggedPageHolder title={"Új tagok felvétele"}>
+                  <Tagfelvetel />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
+              path="/matches"
+              element={
+                <LoggedPageHolder title={"Mérkőzések"}>
+                  <Matches />
+                </LoggedPageHolder>
+              }
+            />
             <Route
               path="/login"
               element={
@@ -50,6 +77,14 @@ const MainContent = () => {
               element={
                 <LoggedPageHolder title={"Regisztráció"}>
                   <Registration />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
+              path="/*"
+              element={
+                <LoggedPageHolder title={"Főoldal"}>
+                  <ToHome />
                 </LoggedPageHolder>
               }
             />

@@ -12,4 +12,12 @@ Router.post("/deleteCar/:id", authMiddleware.isAuth, authController.deleteCar);
 */
 Router.post("/felhasznaloBelepes", authController.felhasznaloBelepes);
 Router.post("/felhasznaloRegisztracio", authController.felhasznaloRegisztracio);
+Router.post("/tagCsapatKilepes/:id", authController.tagCsapatKilepes);
+Router.post("/csapatModositas/:id", authController.csapatModositas);
+Router.post("/csapatTorles/:id", authController.csapatTorles);
+Router.get("/getTagokFelvetelhez/", authController.getTagokFelvetelhez);
+Router.post(
+  "/csapatTagHozzaadas/:tag_id/:csapat_id",
+  authController.csapatTagHozzaadas
+);
 module.exports = Router;

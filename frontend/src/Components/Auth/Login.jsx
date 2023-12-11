@@ -52,8 +52,8 @@ const Login = (props) => {
             type: "success",
             message: data.msg,
           });
-          console.log(data);
-          //authC.login(data.username);
+          //console.log(data);
+          authC.login(data.username);
           navigate("/home");
         } else {
           notificationHandler({

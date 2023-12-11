@@ -146,3 +146,113 @@ exports.felhasznaloRegisztracio = async (req, res) => {
   await t.commit();
   return res.send({ success: true, msg: "Sikeres regisztráció!" });
 };
+exports.tagCsapatKilepes = async (req, res) => {
+  const tag_id = req.params.id;
+  const t = await sequelize.transaction();
+  const tag = await sequelize.query(
+    `UPDATE tagok SET csapat_id = NULL WHERE tag_id = :tag_id`,
+    {
+      replacements: { tag_id: tag_id },
+      type: QueryTypes.UPDATE,
+      transaction: t,
+    }
+  );
+  if (!tag) {
+    await t.rollback();
+    return res.send({ success: false, msg: "Sikertelen adatmódosítás!" });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres adatmódosítás!" });
+};
+exports.csapatModositas = async (req, res) => {
+  const { csapat_nev, varos, alapitas_ev } = req.body;
+  const csapat_id = req.params.id;
+  const t = await sequelize.transaction();
+  const [csapat, metadata] = await sequelize.query(
+    `UPDATE csapatok SET csapat_nev = :csapat_nev, varos = :varos, alapitas_ev = :alapitas_ev WHERE csapat_id = :csapat_id`,
+    {
+      replacements: {
+        csapat_nev: csapat_nev,
+        varos: varos,
+        alapitas_ev: alapitas_ev,
+        csapat_id: csapat_id,
+      },
+      type: QueryTypes.UPDATE,
+      transaction: t,
+    }
+  );
+  if (metadata === 0) {
+    await t.rollback();
+    return res.send({
+      success: false,
+      msg: "Sikertelen csapat adatmódosítás!",
+    });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres csapat adatmódosítás!" });
+};
+exports.csapatTorles = async (req, res) => {
+  const csapat_id = req.params.id;
+  const t = await sequelize.transaction();
+  const tagok = await sequelize.query(
+    `UPDATE tagok SET csapat_id = NULL WHERE csapat_id = :csapat_id`,
+    {
+      replacements: { csapat_id: csapat_id },
+      type: QueryTypes.UPDATE,
+      transaction: t,
+    }
+  );
+  const result = await sequelize.query(
+    `DELETE FROM csapatok WHERE csapat_id = :csapat_id`,
+    {
+      replacements: { csapat_id: csapat_id },
+      type: QueryTypes.DELETE,
+      transaction: t,
+    }
+  );
+  //const metadata = result;
+  //itt ez fölösleges mert undefined et ad vissza
+  if (result === 0) {
+    await t.rollback();
+    return res.send({
+      success: false,
+      msg: "Sikertelen csapat törlés!",
+    });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres csapat törlés!" });
+};
+exports.getTagokFelvetelhez = async (req, res) => {
+  const result = await sequelize.query(
+    `SELECT * FROM tagok WHERE csapat_id IS NULL`,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.send({
+    success: true,
+    msg: "Sikeres lekérdezés",
+    result: result,
+  });
+};
+exports.csapatTagHozzaadas = async (req, res) => {
+  const { csapat_id, tag_id } = req.params;
+  const t = await sequelize.transaction();
+  const result = await sequelize.query(
+    `UPDATE tagok SET csapat_id = :csapat_id WHERE tag_id = :tag_id`,
+    {
+      replacements: { csapat_id: csapat_id, tag_id: tag_id },
+      type: QueryTypes.UPDATE,
+      transaction: t,
+    }
+  );
+  if (result === 0) {
+    await t.rollback();
+    return res.send({
+      success: false,
+      msg: "Sikertelen csapat-tag hozzaadás!",
+    });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres csapat-tag hozzaadás!" });
+};

@@ -1,0 +1,28 @@
+Felhasználók táblaterve
+Megnevezés I Típus I Megjegyzés
+I I Email I VARCHAR(255) I elsődleges kulcs, egyedi
+I I jelszó I VARCHAR(255) I titkosítva tárolva
+I I felhasználó név I VARCHAR(255) I a bejelentkezéshez a név
+I I név I VARCHAR(255) I a felhasználó teljes neve I
+Csapat táblaterve
+I Megnevezés I Típus I Megjegyzés
+I I I INT I elsődleges kulcs,
+I I I VARCHAR(255) I egyedi
+I I város I VARCHAR(255) I város nevel
+I I alapítási_év I YEAR I I
+Tagok táblaterve
+I Megnevezés I Típus I Megjegyzés
+I I tag_id I INT I elsődleges kulcs, auto increment
+I I csapat_id I INT I idegen kulcs a Csapat tábla csapatszámához
+I I tag_név I VARCHAR(255) I A tag teljes neve
+I I születési dátum I DATETIME IA tag születési dátuma
+I I állampolgárság I VARCHAR(255) I A tag állampolgársága
+I I poszt I VARCHAR(255) I I A tag szerepe a csapaton belül
+Mérkőzések táblaterve
+I Megnevezés I Típus I Megjegyzés
+I mérkőzés id I INT I elsődleges kulcs, auto increment
+I dátum I DATETIME I A mérkőzés dátuma
+I I csapatl_id I VARCHAR(255) I idegen kulcsa Csapat tábla csapatszám-hoz
+I I csapat2_id I VARCHAR(255) I idegen kulcs a Csapat tábla csapatszám-hoz
+I I helyszín I VARCHAR(255) I A mérkőzés helyszíne
+I I eredmény I VARCHAR(255) I A mérkőzés eredménye

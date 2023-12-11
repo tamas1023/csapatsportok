@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  --text-primary: #b6b6b6;
-  --text-secondary: #ececec;
+  --text-primary: #e9e9e9;
+  --text-secondary: #ffffff;
   --bg-primary: #23232e;
   --bg-secondary: #141418;
   --transition-speed: 600ms;
@@ -69,10 +69,11 @@ main {
 }
 .link-text {
   display: none;
-  margin-left: Irem;
+  margin-left: 0.5rem;
 }
 .nav-link svg {
   min-width: 2rem;
+  max-width: 2rem;
   margin: 0 1.5rem;
 }
 .navbar:hover {

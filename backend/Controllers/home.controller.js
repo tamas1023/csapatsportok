@@ -56,6 +56,48 @@ exports.getCsapatTagok = async (req, res) => {
     result: result,
   });
 };
+exports.getEgyCsapatTagokkal = async (req, res) => {
+  const id = req.params.id;
+  const result = await sequelize.query(
+    `
+      SELECT cs.*, 
+        (
+          SELECT GROUP_CONCAT(
+            CONCAT(
+              '{"tag_id":', t.tag_id, ',',
+              '"csapat_id":', t.csapat_id, ',',
+              '"tag_nev":"', t.tag_nev, '",',
+              '"szuletesi_datum":"', t.szuletesi_datum, '",',
+              '"allampolgarsag":"', t.allampolgarsag, '",',
+              '"poszt":"', t.poszt, '"}'
+            )
+            SEPARATOR ','
+          ) 
+          FROM tagok AS t
+          WHERE t.csapat_id = cs.csapat_id
+        ) AS tagok
+      FROM csapatok AS cs
+      WHERE cs.csapat_id = :id
+    `,
+    {
+      replacements: { id: id },
+      type: QueryTypes.SELECT,
+    }
+  );
+  if (!result || result.length === 0) {
+    return res.send({ success: false, msg: "Rossz lekérdezés" });
+  }
+  const teamWithMembers = result.map((team) => {
+    const teamData = { ...team };
+    teamData.tagok = team.tagok ? JSON.parse(`[${team.tagok}]`) : [];
+    return teamData;
+  })[0];
+  return res.send({
+    success: true,
+    msg: "Sikeres lekérdezés",
+    result: teamWithMembers,
+  });
+};
 exports.getMerkozesek = async (req, res) => {
   const result = await sequelize.query(`SELECT * FROM merkozesek`, {
     type: QueryTypes.SELECT,

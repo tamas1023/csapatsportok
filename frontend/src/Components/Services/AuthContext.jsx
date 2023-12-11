@@ -33,13 +33,13 @@ const AuthContext = (props) => {
     */
     setIsLoggedIn(true);
     setUser(username);
+    //navigate("/home");
   };
   const logout = async () => {
     setIsLoggedIn(false);
     setUser(null);
-
     cookies.remove("BejelentezesAdatok", { path: "/" });
-    navigate("/home");
+    console.log("Elvileg cookie torles");
   };
 
   useEffect(() => {
