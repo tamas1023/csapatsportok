@@ -189,44 +189,46 @@ const OneTeam = () => {
   return (
     <>
       <div className=" overflow-x-auto sm:rounded-lg">
-        <center>
-          <input
-            type="text"
-            defaultValue={team.csapat_nev}
-            ref={csapat_nev}
-          ></input>
-          <input
-            type="text"
-            defaultValue={team.varos}
-            ref={varos}
-            className="px-6 py-4 "
-          ></input>
-          <input
-            type="number"
-            defaultValue={team.alapitas_ev}
-            ref={alapitas_ev}
-            className="px-6 py-4 "
-          ></input>
+        <div className="bg-white rounded-md shadow-md p-6 w-96 mt-2 m-auto">
+          <center className="grid gap-4">
+            <input
+              type="text"
+              defaultValue={team.csapat_nev}
+              ref={csapat_nev}
+            ></input>
+            <input
+              type="text"
+              defaultValue={team.varos}
+              ref={varos}
+              className="px-6 py-4 "
+            ></input>
+            <input
+              type="number"
+              defaultValue={team.alapitas_ev}
+              ref={alapitas_ev}
+              className="px-6 py-4 "
+            ></input>
 
-          <Link
-            className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
-            onClick={() => {
-              setContent("csapatmodositas");
-              setShowConfirmModal(true);
-            }}
-          >
-            Módosítás
-          </Link>
-          <Link
-            className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
-            onClick={() => {
-              setContent("csapattorles");
-              setShowConfirmModal(true);
-            }}
-          >
-            Törlés
-          </Link>
-        </center>
+            <Link
+              className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
+              onClick={() => {
+                setContent("csapatmodositas");
+                setShowConfirmModal(true);
+              }}
+            >
+              Módosítás
+            </Link>
+            <Link
+              className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
+              onClick={() => {
+                setContent("csapattorles");
+                setShowConfirmModal(true);
+              }}
+            >
+              Törlés
+            </Link>
+          </center>
+        </div>
         <br />
         <center>
           <Link

@@ -7,10 +7,11 @@ Például el kell gondolkozni, hogy a dátumot hogy tárolom, majd megnézem az 
 
 !!!!!
 
-Csinálni egy alert/ notify dolgot mert az kell a feladathoz
-Regisztráció és bejelentkezés rész
+Out Protectiont megcsinálni, hogyha olyan oldalra megy ahova csak bejelentkeze lehet, akkor dobja a /home ra
 
 Csapat létrehozás és módosítás, új tag felvétele, kilistázása táblázatos formában
+
+tag módosítást megvalósítani
 
 mérkőzések törlése, kiírása és módosítása 
 

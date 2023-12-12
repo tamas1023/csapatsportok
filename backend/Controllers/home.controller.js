@@ -101,7 +101,6 @@ exports.getEgyCsapatTagokkal = async (req, res) => {
 exports.getMerkozesek = async (req, res) => {
   const result = await sequelize.query(`SELECT * FROM merkozesek`, {
     type: QueryTypes.SELECT,
-    transaction: t,
   });
   if (!result) {
     return res.send({ success: false, msg: "Rossz lekérdezés" });
@@ -112,3 +111,17 @@ exports.getMerkozesek = async (req, res) => {
     result: result,
   });
 };
+exports.getTagok = async (req, res) => {
+
+  const result = await sequelize.query(`SELECT * FROM tagok`, {
+    type: QueryTypes.SELECT,
+  });
+  if (!result) {
+    return res.send({ success: false, msg: "Rossz lekérdezés" });
+  }
+  return res.send({
+    success: true,
+    msg: "Sikeres lekérdezés",
+    result: result,
+  });
+}

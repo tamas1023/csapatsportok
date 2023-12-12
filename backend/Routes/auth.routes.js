@@ -13,6 +13,7 @@ Router.post("/deleteCar/:id", authMiddleware.isAuth, authController.deleteCar);
 Router.post("/felhasznaloBelepes", authController.felhasznaloBelepes);
 Router.post("/felhasznaloRegisztracio", authController.felhasznaloRegisztracio);
 Router.post("/tagCsapatKilepes/:id", authController.tagCsapatKilepes);
+Router.post("/UjCsapat", authController.UjCsapat);
 Router.post("/csapatModositas/:id", authController.csapatModositas);
 Router.post("/csapatTorles/:id", authController.csapatTorles);
 Router.get("/getTagokFelvetelhez/", authController.getTagokFelvetelhez);
@@ -20,4 +21,8 @@ Router.post(
   "/csapatTagHozzaadas/:tag_id/:csapat_id",
   authController.csapatTagHozzaadas
 );
+Router.post("/UjTag", authController.UjTag);
+Router.post("/tagTorles/:id", authController.tagTorles);
+Router.get("/getEgyTag/:id", authController.getEgyTag);
+Router.post("/egyTagModositas/:id", authController.egyTagModositas);
 module.exports = Router;

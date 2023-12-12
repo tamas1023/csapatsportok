@@ -11,6 +11,10 @@ import ToHome from "../404/ToHome";
 import Matches from "../Volleyball/Matches";
 import OneTeam from "../Volleyball/OneTeam";
 import Tagfelvetel from "../Volleyball/Tagfelvetel";
+import UjTag from "../Volleyball/UjTag";
+import TagokListaja from "../Volleyball/TagokListaja";
+import TagModositas from "../Volleyball/TagModositas";
+import UjCsapat from "../Volleyball/UjCsapat";
 
 const MainContent = () => {
   //Bejelentkezés és regisztráció
@@ -41,6 +45,14 @@ const MainContent = () => {
               }
             />
             <Route
+              path="/newTeam"
+              element={
+                <LoggedPageHolder title={"Új csapat felvételet"}>
+                  <UjCsapat />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
               path="/team/:id"
               element={
                 <LoggedPageHolder title={"Egy csapat"}>
@@ -51,8 +63,33 @@ const MainContent = () => {
             <Route
               path="/tagfelvetel/:id"
               element={
-                <LoggedPageHolder title={"Új tagok felvétele"}>
+                <LoggedPageHolder title={"Új tagok felvétele a csapatba"}>
                   <Tagfelvetel />
+                </LoggedPageHolder>
+              }
+            />
+
+            <Route
+              path="/ujTag"
+              element={
+                <LoggedPageHolder title={"Új tagok felvétele"}>
+                  <UjTag />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
+              path="/tagok"
+              element={
+                <LoggedPageHolder title={"Tagok listázása"}>
+                  <TagokListaja />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
+              path="/tagmodositas/:id"
+              element={
+                <LoggedPageHolder title={"Tagok listázása"}>
+                  <TagModositas />
                 </LoggedPageHolder>
               }
             />

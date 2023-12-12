@@ -256,3 +256,120 @@ exports.csapatTagHozzaadas = async (req, res) => {
   await t.commit();
   return res.send({ success: true, msg: "Sikeres csapat-tag hozzaadás!" });
 };
+exports.UjTag = async (req, res) => {
+  const { Tag_nev, Szuletesi_datum, Allampolgarsag, Poszt } = req.body;
+  const t = await sequelize.transaction();
+  const result = await sequelize.query(
+    `INSERT INTO tagok (tag_nev, szuletesi_datum, allampolgarsag, poszt) VALUES (:Tag_nev, :Szuletesi_datum, :Allampolgarsag, :Poszt)`,
+    {
+      replacements: {
+        Tag_nev: Tag_nev,
+        Szuletesi_datum: Szuletesi_datum,
+        Allampolgarsag: Allampolgarsag,
+        Poszt: Poszt,
+      },
+      type: QueryTypes.INSERT,
+      transaction: t,
+    }
+  );
+  //console.log(result);
+  if (result[1] === 0) {
+    await t.rollback();
+    return res.send({
+      success: false,
+      msg: "Sikertelen Tag felvétel!",
+    });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres Tag felvétel!" });
+};
+
+exports.tagTorles = async (req, res) => {
+  const id = req.params.id;
+  const t = await sequelize.transaction();
+  const result = await sequelize.query(`DELETE FROM tagok WHERE tag_id = :id`, {
+    replacements: { id: id },
+    type: QueryTypes.DELETE,
+    transaction: t,
+  });
+  if (result === 0) {
+    await t.rollback();
+    return res.send({
+      success: false,
+      msg: "Sikertelen tag törlés!",
+    });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres tag törlés!" });
+};
+exports.getEgyTag = async (req, res) => {
+  const id = req.params.id;
+  const result = await sequelize.query(
+    `SELECT * FROM tagok WHERE tag_id = :id`,
+    {
+      replacements: { id: id },
+      type: QueryTypes.SELECT,
+    }
+  );
+  if (result == 0) {
+    return res.send({ success: false, msg: "Rossz lekérdezés" });
+  }
+  return res.send({
+    success: true,
+    msg: "Sikeres lekérdezés",
+    result: result,
+  });
+};
+exports.egyTagModositas = async (req, res) => {
+  const { Tag_nev, Szuletesi_datum, Allampolgarsag, Poszt } = req.body;
+  const id = req.params.id;
+  const t = await sequelize.transaction();
+  const result = await sequelize.query(
+    `UPDATE tagok SET tag_nev = :Tag_nev, szuletesi_datum = :Szuletesi_datum, allampolgarsag = :Allampolgarsag, poszt = :Poszt WHERE tag_id = :id`,
+    {
+      replacements: {
+        Tag_nev: Tag_nev,
+        Szuletesi_datum: Szuletesi_datum,
+        Allampolgarsag: Allampolgarsag,
+        Poszt: Poszt,
+        id: id,
+      },
+      type: QueryTypes.UPDATE,
+      transaction: t,
+    }
+  );
+  if (result === 0) {
+    await t.rollback();
+    return res.send({
+      success: false,
+      msg: "Sikertelen tag módosítás!",
+    });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres tag módosítás!" });
+};
+exports.UjCsapat = async (req, res) => {
+  const { csapat_nev, varos, alapitasi_ev } = req.body;
+  const t = await sequelize.transaction();
+  const result = await sequelize.query(
+    `INSERT INTO csapatok (csapat_nev, varos, alapitas_ev) VALUES (:csapat_nev, :varos, :alapitasi_ev)`,
+    {
+      replacements: {
+        csapat_nev: csapat_nev,
+        varos: varos,
+        alapitasi_ev: alapitasi_ev,
+      },
+      type: QueryTypes.INSERT,
+      transaction: t,
+    }
+  );
+  if (result[1] === 0) {
+    await t.rollback();
+    return res.send({
+      success: false,
+      msg: "Sikertelen csapat felvétel!",
+    });
+  }
+  await t.commit();
+  return res.send({ success: true, msg: "Sikeres csapat felvétel!" });
+};
