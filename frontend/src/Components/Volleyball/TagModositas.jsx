@@ -7,7 +7,7 @@ const cookies = new Cookies();
 
 function TagModositas(props) {
   const { id } = useParams();
-  const navitage = useNavigate();
+  const navigate = useNavigate();
   const authC = useContext(AuthCont);
   const { notificationHandler } = useContext(NotificationCont);
   const [content, setContent] = useState("");
@@ -108,7 +108,7 @@ function TagModositas(props) {
             type: "success",
             message: data.msg,
           });
-          navitage("/home");
+          navigate("/home");
         } else {
           notificationHandler({
             type: "error",

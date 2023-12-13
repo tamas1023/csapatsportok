@@ -6,7 +6,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 function UjCsapat(props) {
-  const navitage = useNavigate();
+  const navigate = useNavigate();
   const authC = useContext(AuthCont);
   const { notificationHandler } = useContext(NotificationCont);
   const [content, setContent] = useState("");
@@ -63,7 +63,7 @@ function UjCsapat(props) {
             type: "success",
             message: data.msg,
           });
-          navitage("/home");
+          navigate("/home");
         } else {
           notificationHandler({
             type: "error",

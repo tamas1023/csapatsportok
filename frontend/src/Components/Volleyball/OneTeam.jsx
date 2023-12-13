@@ -4,7 +4,7 @@ import { NotificationCont } from "../Services/NotificationContext";
 const OneTeam = () => {
   const params = useParams();
   const id = parseInt(params.id);
-  const navitage = useNavigate();
+  const navigate = useNavigate();
   //console.log(id);
   const [team, setTeam] = useState([]);
   const csapat_nev = useRef();
@@ -15,6 +15,7 @@ const OneTeam = () => {
   const [content, setContent] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [kivalasztottTag, setKivalasztottTag] = useState(0);
+  const [allampolgarsagok, setAllampolgarsagok] = useState([]);
 
   async function getTeam() {
     await fetch("http://localhost:1023" + "/home/getEgyCsapatTagokkal/" + id, {
@@ -36,9 +37,36 @@ const OneTeam = () => {
         console.error("Error: ", error);
       });
   }
+  async function getEgyCsapatTagokSzamaAllampolgarsagSzerint() {
+    await fetch(
+      "http://localhost:1023" +
+        "/auth/getEgyCsapatTagokSzamaAllampolgarsagSzerint/" +
+        id,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => {
+        // Ellenőrizd a választ, hogy biztosítsd, hogy a kérés sikeres volt
+        if (!response.ok) {
+          throw new Error("Error");
+        }
+        return response.json(); // Válasz JSON formátumban
+      })
+      .then((data) => {
+        // Feldolgozni és menteni a kapott adatot a state-be
+        setAllampolgarsagok(data.result);
+        //console.log(data.result);
+      })
+      .catch((error) => {
+        // Kezelni a hibát itt, például naplózás vagy felhasználó értesítése
+        console.error("Error: ", error);
+      });
+  }
   //console.log(team);
   useEffect(() => {
     getTeam();
+    getEgyCsapatTagokSzamaAllampolgarsagSzerint();
   }, []);
   async function tagKitolres() {
     await fetch(
@@ -141,7 +169,7 @@ const OneTeam = () => {
             type: "success",
             message: data.msg,
           });
-          navitage("/home");
+          navigate("/home");
           //getTeam();
         }
       })
@@ -237,6 +265,40 @@ const OneTeam = () => {
           >
             Új tag felvétele
           </Link>
+        </center>
+        <br />
+        <center>
+          <table className="w-1/3 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Állampolgárság
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Darab
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {allampolgarsagok &&
+                allampolgarsagok.map((item, index) => (
+                  <tr
+                    key={item.allampolgarsag}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  >
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {item.allampolgarsag}
+                    </th>
+                    <td className="px-6 py-4 text-gray-200" placeholder="Város">
+                      {item.tagok_szama}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </center>
         <br />
         <center>

@@ -70,7 +70,7 @@ const Navbar = () => {
         {authC.isLoggedIn && (
           <>
             <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
+              <Link to={"/newMatch"} className="nav-link">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="16"

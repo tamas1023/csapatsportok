@@ -25,4 +25,13 @@ Router.post("/UjTag", authController.UjTag);
 Router.post("/tagTorles/:id", authController.tagTorles);
 Router.get("/getEgyTag/:id", authController.getEgyTag);
 Router.post("/egyTagModositas/:id", authController.egyTagModositas);
+Router.get("/getEgyMerkozes/:id", authController.getEgyMerkozes);
+Router.post("/egyMerkozesHozzaadas", authController.egyMerkozesHozzaadas);
+Router.post("/egyMerkozesModositas/:id", authController.egyMerkozesModositas);
+Router.post("/merkozesTorles/:id", authController.merkozesTorles);
+
+Router.get(
+  "/getEgyCsapatTagokSzamaAllampolgarsagSzerint/:id",
+  authController.getEgyCsapatTagokSzamaAllampolgarsagSzerint
+);
 module.exports = Router;

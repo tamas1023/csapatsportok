@@ -56,6 +56,7 @@ exports.getCsapatTagok = async (req, res) => {
     result: result,
   });
 };
+//TODO Al lekérdezés
 exports.getEgyCsapatTagokkal = async (req, res) => {
   const id = req.params.id;
   const result = await sequelize.query(
@@ -112,7 +113,6 @@ exports.getMerkozesek = async (req, res) => {
   });
 };
 exports.getTagok = async (req, res) => {
-
   const result = await sequelize.query(`SELECT * FROM tagok`, {
     type: QueryTypes.SELECT,
   });
@@ -124,4 +124,32 @@ exports.getTagok = async (req, res) => {
     msg: "Sikeres lekérdezés",
     result: result,
   });
-}
+};
+//TODO INNER JOIN több mint 2 táblás lekérdezés
+exports.getMerkozesek = async (req, res) => {
+  const result = await sequelize.query(
+    `
+    SELECT 
+      m.merkozes_id,
+      m.datum,
+      c1.csapat_nev AS csapat1_nev,
+      c2.csapat_nev AS csapat2_nev,
+      m.helyszin,
+      m.eredmeny
+    FROM merkozesek m
+    INNER JOIN csapatok c1 ON m.csapat1_id = c1.csapat_id
+    INNER JOIN csapatok c2 ON m.csapat2_id = c2.csapat_id
+  `,
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+  if (!result) {
+    return res.send({ success: false, msg: "Rossz lekérdezés" });
+  }
+  return res.send({
+    success: true,
+    msg: "Sikeres lekérdezés",
+    result: result,
+  });
+};

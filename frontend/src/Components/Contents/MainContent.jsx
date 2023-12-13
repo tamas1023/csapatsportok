@@ -15,6 +15,8 @@ import UjTag from "../Volleyball/UjTag";
 import TagokListaja from "../Volleyball/TagokListaja";
 import TagModositas from "../Volleyball/TagModositas";
 import UjCsapat from "../Volleyball/UjCsapat";
+import MerkozesModositas from "../Volleyball/MerkozesModositas";
+import UjMerkozesek from "../Volleyball/UjMerkozesek";
 
 const MainContent = () => {
   //Bejelentkezés és regisztráció
@@ -30,6 +32,19 @@ const MainContent = () => {
   //2. ugyan ez csak az adott személyre is működjön
   //ez lehet hogy al lekérdezés is szükséges lesz
   //Legalább egy lekérdezésben allekérdezés szerepeljen.
+
+  /*
+  Csapatok kilistázása táblázatos formában.	1 pont 
+  !!!kész!!
+	Listázza ki táblázatos formában az elkövetkező hét nap mérkőzéseit az aktuális dátumtól számítva.	1 pont
+	Listázza ki táblázatos formában az adatbázisban szereplő öt legfiatalabb csapattagot. 
+  A listában jelenjen meg a személy csapata is, ahol játszik.	1 pont
+  Ez ? lesz a megoldása
+	Listázza ki táblázatos formában minden csapat esetén a győzelmek és vereségek számát.	2 pont
+	Listázzuk ki táblázatos formában a legrégebben alapított csapat tagjait.	2 pont
+	Listázza ki táblázatos formában egy a felhasználó által megadott csapathoz tartozó tagok számát a tagok állampolgársága szerint csoportosítva.	2 pont
+  !!!Kész!!!
+  */
   return (
     <>
       <AuthContext>
@@ -68,7 +83,6 @@ const MainContent = () => {
                 </LoggedPageHolder>
               }
             />
-
             <Route
               path="/ujTag"
               element={
@@ -88,7 +102,7 @@ const MainContent = () => {
             <Route
               path="/tagmodositas/:id"
               element={
-                <LoggedPageHolder title={"Tagok listázása"}>
+                <LoggedPageHolder title={"Tagok módosítása"}>
                   <TagModositas />
                 </LoggedPageHolder>
               }
@@ -98,6 +112,22 @@ const MainContent = () => {
               element={
                 <LoggedPageHolder title={"Mérkőzések"}>
                   <Matches />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
+              path="/newMatch"
+              element={
+                <LoggedPageHolder title={"Új mérkőzés felvétele"}>
+                  <UjMerkozesek />
+                </LoggedPageHolder>
+              }
+            />
+            <Route
+              path="/merkozesmodositas/:id"
+              element={
+                <LoggedPageHolder title={"Mérkőzés módosítás"}>
+                  <MerkozesModositas />
                 </LoggedPageHolder>
               }
             />
