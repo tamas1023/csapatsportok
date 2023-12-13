@@ -162,7 +162,7 @@ exports.getTagok = async (req, res) => {
     result: result,
   });
 };
-//TODO INNER JOIN több mint 2 táblás lekérdezés
+//TODO LEFT JOIN több mint 2 táblás lekérdezés
 exports.getOtLegfiatalabbTag = async (req, res) => {
   const result = await sequelize.query(
     `SELECT tagok.tag_nev,tagok.szuletesi_datum,tagok.allampolgarsag,tagok.poszt, csapatok.csapat_nev FROM tagok LEFT JOIN csapatok ON csapatok.csapat_id = tagok.csapat_id GROUP BY tagok.tag_nev ORDER BY szuletesi_datum DESC LIMIT 5`,

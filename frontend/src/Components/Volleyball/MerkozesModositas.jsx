@@ -13,8 +13,6 @@ function MerkozesModositas(props) {
   const [content, setContent] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [csapatok, setCsapatok] = useState([]);
-  const [selectedCsapat1, setSelectedCsapat1] = useState("");
-  const [selectedCsapat2, setSelectedCsapat2] = useState("");
 
   // Eseménykezelők a lenyíló listákhoz
 
@@ -251,7 +249,7 @@ function MerkozesModositas(props) {
             <select
               name="nyertes"
               id="nyertes"
-              value={merkozesek.eredmeny}
+              value={merkozesek.eredmeny == null ? "" : merkozesek.eredmeny}
               onChange={handleEredmenyChange}
             >
               <option value="">Válassz nyertest</option>

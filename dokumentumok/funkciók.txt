@@ -1,0 +1,28 @@
+Az alkalmazás funkciói
+Bejelentkezés és regisztráció
+Legrégebbi csapat tagjai kilistázása
+Összes csapat megjelenítése táblázatos formában, nyereségekkel és vereségekkel
+kiválasztott csapat megjelenítése, annak tagjai megjelenítése, és csapatból tölrési lehetősége
+A tagok állampolgárságainak megjelenítése darabszámmal
+A kiválaszott csapat módosítása és törlése
+A csapathoz új tag választása
+Új csapat létrehozása
+Mérkőzések megjelenítése táblázatos formában, és annak  módosítása és törlése
+Az elkövetkező 7 nap mérkőzései megjelenítése
+Öt legfiatalabb tag listázása, csapattal együtt
+Összes tag listázása, és azok módosítása törlése
+Új mérkőzés felvétele
+Új tag felvétele
+
+A három összetett lekérdezés, és al lekérdezés
+al lekérdezés ebben a fájlban: backend/Controllers/home.controller.js
+getEgyCsapatTagokkal részen
+Összetett lekérdezés, két táblás:
+ebben a fájlban: backend/Controllers/home.controller.js
+getOtLegfiatalabbTag részben
+Összetett lekérdezés, két táblás:
+ebben a fájlban: backend/Controllers/home.controller.js
+getMerkozesek részben
+Összetett lekérdezés, két táblás:
+ebben a fájlban: backend/Controllers/home.controller.js
+getHetnapMerkozesek részben

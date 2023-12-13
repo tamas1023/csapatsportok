@@ -1,18 +1,5 @@
 A táblatervet átnézni, áttervezni mert még nem teljes
-Például el kell gondolkozni, hogy a dátumot hogy tárolom, majd megnézem az előző projektekben hogy hogy tárolom
 
-!!!!!
-
-Átírni a felhasználók kapcsolatot hogy ott nem kell név, mert az úgysem lesz hozzárendelve a csapathoz
-
-!!!!!
-
-Out Protectiont megcsinálni, hogyha olyan oldalra megy ahova csak bejelentkeze lehet, akkor dobja a /home ra
-
-Csapat létrehozás és módosítás, új tag felvétele, kilistázása táblázatos formában
-
-tag módosítást megvalósítani
-
-mérkőzések törlése, kiírása és módosítása 
+Átírni a táblatervet a megfelelő adatokkal
 
 Az összes dokumentációs egy pdf re beletenni
