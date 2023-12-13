@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { NotificationCont } from "../Services/NotificationContext";
+import { AuthCont } from "../Services/AuthContext";
 const OneTeam = () => {
   const params = useParams();
   const id = parseInt(params.id);
   const navigate = useNavigate();
+  const authC = useContext(AuthCont);
   //console.log(id);
   const [team, setTeam] = useState([]);
   const csapat_nev = useRef();
@@ -223,48 +225,56 @@ const OneTeam = () => {
               type="text"
               defaultValue={team.csapat_nev}
               ref={csapat_nev}
+              disabled={authC.isLoggedIn ? false : true}
             ></input>
             <input
               type="text"
               defaultValue={team.varos}
               ref={varos}
               className="px-6 py-4 "
+              disabled={authC.isLoggedIn ? false : true}
             ></input>
             <input
               type="number"
               defaultValue={team.alapitas_ev}
               ref={alapitas_ev}
               className="px-6 py-4 "
+              disabled={authC.isLoggedIn ? false : true}
             ></input>
-
-            <Link
-              className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
-              onClick={() => {
-                setContent("csapatmodositas");
-                setShowConfirmModal(true);
-              }}
-            >
-              Módosítás
-            </Link>
-            <Link
-              className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
-              onClick={() => {
-                setContent("csapattorles");
-                setShowConfirmModal(true);
-              }}
-            >
-              Törlés
-            </Link>
+            {authC.isLoggedIn && (
+              <>
+                <Link
+                  className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
+                  onClick={() => {
+                    setContent("csapatmodositas");
+                    setShowConfirmModal(true);
+                  }}
+                >
+                  Módosítás
+                </Link>
+                <Link
+                  className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
+                  onClick={() => {
+                    setContent("csapattorles");
+                    setShowConfirmModal(true);
+                  }}
+                >
+                  Törlés
+                </Link>
+              </>
+            )}
           </center>
         </div>
         <br />
         <center>
-          <Link
-            to={"/tagfelvetel/" + id}
-            className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
-          >
-            Új tag felvétele
-          </Link>
+          {authC.isLoggedIn && (
+            <Link
+              to={"/tagfelvetel/" + id}
+              className="font-medium text-blue-600 dark:text-blue-600 hover:underline pr-4"
+            >
+              Új tag felvétele
+            </Link>
+          )}
         </center>
         <br />
         <center>
@@ -350,16 +360,18 @@ const OneTeam = () => {
                       {item.poszt}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <Link
-                        className="font-medium text-blue-600 dark:text-blue-300 hover:underline"
-                        onClick={() => {
-                          setContent("tagtorles");
-                          setShowConfirmModal(true);
-                          setKivalasztottTag(item.tag_id);
-                        }}
-                      >
-                        Törlés
-                      </Link>
+                      {authC.isLoggedIn && (
+                        <Link
+                          className="font-medium text-blue-600 dark:text-blue-300 hover:underline"
+                          onClick={() => {
+                            setContent("tagtorles");
+                            setShowConfirmModal(true);
+                            setKivalasztottTag(item.tag_id);
+                          }}
+                        >
+                          Törlés
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 ))}

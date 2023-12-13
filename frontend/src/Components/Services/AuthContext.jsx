@@ -39,7 +39,7 @@ const AuthContext = (props) => {
     setIsLoggedIn(false);
     setUser(null);
     cookies.remove("BejelentezesAdatok", { path: "/" });
-    console.log("Elvileg cookie torles");
+    //console.log("Elvileg cookie torles");
   };
 
   useEffect(() => {

@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { NotificationCont } from "../Services/NotificationContext";
+import { AuthCont } from "../Services/AuthContext";
 
 const TagokListaja = () => {
   const { notificationHandler } = useContext(NotificationCont);
+  const authC = useContext(AuthCont);
   const [content, setContent] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [tagok, setTagok] = useState([]);
+  const [otLegfiatalabbTag, setOtLegfiatalabbTag] = useState([]);
   const [tagid, setTagid] = useState(-1);
 
   const navigate = useNavigate();
@@ -32,9 +35,31 @@ const TagokListaja = () => {
         console.error("Error: ", error);
       });
   }
+  async function getOtLegfiatalabbTag() {
+    await fetch("http://localhost:1023" + "/home/getOtLegfiatalabbTag/", {
+      method: "GET",
+    })
+      .then((response) => {
+        // Ellenőrizd a választ, hogy biztosítsd, hogy a kérés sikeres volt
+        if (!response.ok) {
+          throw new Error("Error");
+        }
+        return response.json(); // Válasz JSON formátumban
+      })
+      .then((data) => {
+        // Feldolgozni és menteni a kapott adatot a state-be
+        //console.log(data.result);
+        setOtLegfiatalabbTag(data.result);
+      })
+      .catch((error) => {
+        // Kezelni a hibát itt, például naplózás vagy felhasználó értesítése
+        console.error("Error: ", error);
+      });
+  }
   //console.log(team);
   useEffect(() => {
     getTagok();
+    getOtLegfiatalabbTag();
   }, []);
   const tagTorles = async () => {
     await fetch("http://localhost:1023" + "/auth/tagTorles/" + tagid, {
@@ -105,6 +130,76 @@ const TagokListaja = () => {
   return (
     <>
       <center className="overflow-x-auto">
+        <h1 className="text-2xl">Öt legfiatalabb tag</h1>
+        <br />
+        <table className="w-1/2 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Tag neve
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Születési dátuma
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Állampolgárság
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Poszt
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Csapatban játszik
+              </th>
+              <th scope="col" className="px-6 py-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {otLegfiatalabbTag &&
+              otLegfiatalabbTag.map((item, index) => (
+                //console.log(item.tag_id),
+                <tr
+                  key={index}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {item.tag_nev}
+                  </th>
+                  <td className="px-6 py-4 text-gray-200" placeholder="Város">
+                    {new Date(item.szuletesi_datum).toLocaleDateString()}
+                  </td>
+                  <td
+                    className="px-6 py-4 text-gray-200"
+                    placeholder="Alapítás éve"
+                  >
+                    {item.allampolgarsag}
+                  </td>
+                  <td
+                    className="px-6 py-4 text-gray-200"
+                    placeholder="Alapítás éve"
+                  >
+                    {item.poszt}
+                  </td>
+                  <td
+                    className="px-6 py-4 text-gray-200"
+                    placeholder="Alapítás éve"
+                  >
+                    {item.csapat_nev}
+                  </td>
+                  <td className="px-6 py-4 text-right"></td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </center>
+      <br />
+      <center>
+        <h1 className="text-2xl">Összes tag</h1>
+      </center>
+      <br />
+      <center className="overflow-x-auto">
         <table className="w-1/2 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
             <tr>
@@ -162,22 +257,26 @@ const TagokListaja = () => {
                     {item.csapat_id ? "Igen" : "Nem"}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <Link
-                      to={"/tagmodositas/" + item.tag_id}
-                      className="font-medium text-blue-600 dark:text-blue-300 hover:underline pr-4"
-                    >
-                      Módosítás
-                    </Link>
-                    <Link
-                      className="font-medium text-blue-600 dark:text-blue-300 hover:underline"
-                      onClick={() => {
-                        setTagid(item.tag_id);
-                        setContent("tagtorles");
-                        setShowConfirmModal(true);
-                      }}
-                    >
-                      Törlés
-                    </Link>
+                    {authC.isLoggedIn && (
+                      <>
+                        <Link
+                          to={"/tagmodositas/" + item.tag_id}
+                          className="font-medium text-blue-600 dark:text-blue-300 hover:underline pr-4"
+                        >
+                          Módosítás
+                        </Link>
+                        <Link
+                          className="font-medium text-blue-600 dark:text-blue-300 hover:underline"
+                          onClick={() => {
+                            setTagid(item.tag_id);
+                            setContent("tagtorles");
+                            setShowConfirmModal(true);
+                          }}
+                        >
+                          Törlés
+                        </Link>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}

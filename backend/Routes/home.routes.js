@@ -21,5 +21,7 @@ Router.get("/getCsapatTagok/:id", homeController.getCsapatTagok);
 Router.get("/getMerkozesek/", homeController.getMerkozesek);
 Router.get("/getEgyCsapatTagokkal/:id", homeController.getEgyCsapatTagokkal);
 Router.get("/getTagok/", homeController.getTagok);
+Router.get("/getOtLegfiatalabbTag/", homeController.getOtLegfiatalabbTag);
 Router.get("/getMerkozesek/", homeController.getMerkozesek);
+Router.get("/getHetnapMerkozesek/", homeController.getHetnapMerkozesek);
 module.exports = Router;
