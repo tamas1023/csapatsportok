@@ -39,7 +39,6 @@ const MainContent = () => {
 	Listázza ki táblázatos formában az elkövetkező hét nap mérkőzéseit az aktuális dátumtól számítva.	1 pont
 	Listázza ki táblázatos formában az adatbázisban szereplő öt legfiatalabb csapattagot. 
   A listában jelenjen meg a személy csapata is, ahol játszik.	1 pont
-  Ez ? lesz a megoldása
 	Listázza ki táblázatos formában minden csapat esetén a győzelmek és vereségek számát.	2 pont
 	Listázzuk ki táblázatos formában a legrégebben alapított csapat tagjait.	2 pont
 	Listázza ki táblázatos formában egy a felhasználó által megadott csapathoz tartozó tagok számát a tagok állampolgársága szerint csoportosítva.	2 pont
