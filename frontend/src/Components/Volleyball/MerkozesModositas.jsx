@@ -110,7 +110,7 @@ function MerkozesModositas(props) {
             type: "success",
             message: data.msg,
           });
-          navigate("/home");
+          navigate("/matches");
         } else {
           notificationHandler({
             type: "error",
@@ -139,6 +139,7 @@ function MerkozesModositas(props) {
       })
       .then((data) => {
         // Feldolgozni és menteni a kapott adatot a state-be
+        //console.log(data.result);
         setCsapatok(data.result);
       })
       .catch((error) => {

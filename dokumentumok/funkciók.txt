@@ -17,12 +17,12 @@ Az elkövetkező 7 nap mérkőzései megjelenítése
 A három összetett lekérdezés, és al lekérdezés
 al lekérdezés ebben a fájlban: backend/Controllers/home.controller.js
 getEgyCsapatTagokkal részen
-Összetett lekérdezés, két táblás:
+Összetett lekérdezés, két táblás group by:
 ebben a fájlban: backend/Controllers/home.controller.js
 getOtLegfiatalabbTag részben
-Összetett lekérdezés, két táblás:
+Összetett lekérdezés, két táblás group by:
 ebben a fájlban: backend/Controllers/home.controller.js
-getMerkozesek részben
+getCsapatok részben result3 néven
 Összetett lekérdezés, két táblás:
 ebben a fájlban: backend/Controllers/home.controller.js
 getHetnapMerkozesek részben

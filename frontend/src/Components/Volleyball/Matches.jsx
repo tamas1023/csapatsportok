@@ -11,9 +11,30 @@ const Matches = () => {
   const [merkozesek, setMerkozesek] = useState([]);
   const [hetnapMerkozesek, setHetnapMerkozesekk] = useState([]);
   const [merkozesid, setMerkozesid] = useState(-1);
-
+  const [csapatok, setCsapatok] = useState([]);
   const navigate = useNavigate();
 
+  async function getTeams() {
+    await fetch("http://localhost:1023" + "/home/getCsapatok", {
+      method: "GET",
+    })
+      .then((response) => {
+        // Ellenőrizd a választ, hogy biztosítsd, hogy a kérés sikeres volt
+        if (!response.ok) {
+          throw new Error("Error");
+        }
+        return response.json(); // Válasz JSON formátumban
+      })
+      .then((data) => {
+        // Feldolgozni és menteni a kapott adatot a state-be
+        //console.log(data.result);
+        setCsapatok(data.result);
+      })
+      .catch((error) => {
+        // Kezelni a hibát itt, például naplózás vagy felhasználó értesítése
+        console.error("Error: ", error);
+      });
+  }
   async function getMerkozesek() {
     await fetch("http://localhost:1023" + "/home/getMerkozesek/", {
       method: "GET",
@@ -60,6 +81,7 @@ const Matches = () => {
   useEffect(() => {
     getMerkozesek();
     getHetnapMerkozesek();
+    getTeams();
   }, []);
   const merkozesTorles = async () => {
     await fetch(
@@ -197,7 +219,7 @@ const Matches = () => {
                     className="px-6 py-4 text-gray-200"
                     placeholder="Alapítás éve"
                   >
-                    {item.eredmeny}
+                    {csapatok[item.eredmeny - 1]?.csapat_nev}
                   </td>
                   <td className="px-6 py-4 text-right">
                     {authC.isLoggedIn && (
@@ -292,7 +314,7 @@ const Matches = () => {
                     className="px-6 py-4 text-gray-200"
                     placeholder="Alapítás éve"
                   >
-                    {item.eredmeny}
+                    {csapatok[item.eredmeny - 1]?.csapat_nev}
                   </td>
                   <td className="px-6 py-4 text-right">
                     {authC.isLoggedIn && (
